@@ -7422,7 +7422,7 @@ do
 					ScreenInsets = Enum.ScreenInsets.None,
 					ZIndexBehavior = Enum.ZIndexBehavior.Sibling,
 					DisplayOrder = 201,
-					OnTopOfCoreBlur = false,
+					OnTopOfCoreBlur = true,
 					g("CanvasGroup")({
 						Name = "MenuBody",
 						BorderColor3 = Color3.fromRGB(0, 0, 0),
@@ -7662,28 +7662,28 @@ do
 					y.TextTransparency = b.Theme.Text.Primary[2].Value
 				end) ]]
 
-                function updateOptions()
+                local function updateOptions()
                     if u.Multi then
                         local selected = {}
-                        for _, v in u.Value do
+                        for _, v in ipairs(u.Value or {}) do
                             selected[v] = true
                         end
 
-                        for i, opt in o.Options do
+                        for i, opt in ipairs(o.Options) do
                             if opt then
                                 opt.BackgroundTransparency = selected[i] and 0 or 1
                             end
                         end
                     else
                         local value = u.Value
-                        for i, opt in o.Options do
+                        for i, opt in ipairs(o.Options) do
                             if opt then
                                 opt.BackgroundTransparency = (value == i) and 0 or 1
                             end
                         end
                     end
                 end
-
+                
 				updateOptions()
 				x.MouseButton1Click:Connect(function()
 					if u.Multi then
@@ -7694,18 +7694,20 @@ do
 						else
 							table.insert(u.Value, w)
 						end
+                        updateOptions()
 						if u.ValueChanged then
 							task.spawn(u.ValueChanged, u, u.Value)
+				            updateOptions()
 						end
+                        updateOptions()
 					else
 						if u then
 							u.Expanded = false
 							u.Value = w
+				            updateOptions()
 						end
+                        updateOptions()
 					end
-                    for i =1,15 do task.wait()
-                    updateOptions()
-                    end
 				end)
 			end
 			c = c or {}
@@ -7793,7 +7795,7 @@ do
 					ScreenInsets = Enum.ScreenInsets.None,
 					ZIndexBehavior = Enum.ZIndexBehavior.Sibling,
 					DisplayOrder = 201,
-					OnTopOfCoreBlur = false,
+					OnTopOfCoreBlur = true,
 					g("CanvasGroup")({
 						Name = "MenuBody",
 						BorderColor3 = Color3.fromRGB(0, 0, 0),
@@ -8003,7 +8005,7 @@ l.New = function(p)
 				ResetOnSpawn = false,
 				ZIndexBehavior = Enum.ZIndexBehavior.Sibling,
 				DisplayOrder = 200,
-				OnTopOfCoreBlur = false,
+				OnTopOfCoreBlur = true,
 			})
 		)
 	)
