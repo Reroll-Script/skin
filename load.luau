@@ -7665,18 +7665,18 @@ do
                 function updateOptions()
                     if u.Multi then
                         local selected = {}
-                        for _, v in ipairs(u.Value or {}) do
+                        for _, v in u.Value do
                             selected[v] = true
                         end
 
-                        for i, opt in ipairs(o.Options) do
+                        for i, opt in o.Options do
                             if opt then
                                 opt.BackgroundTransparency = selected[i] and 0 or 1
                             end
                         end
                     else
                         local value = u.Value
-                        for i, opt in ipairs(o.Options) do
+                        for i, opt in o.Options do
                             if opt then
                                 opt.BackgroundTransparency = (value == i) and 0 or 1
                             end
