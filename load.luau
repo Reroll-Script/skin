@@ -7422,7 +7422,7 @@ do
 					ScreenInsets = Enum.ScreenInsets.None,
 					ZIndexBehavior = Enum.ZIndexBehavior.Sibling,
 					DisplayOrder = 201,
-					OnTopOfCoreBlur = true,
+					OnTopOfCoreBlur = false,
 					g("CanvasGroup")({
 						Name = "MenuBody",
 						BorderColor3 = Color3.fromRGB(0, 0, 0),
@@ -7794,7 +7794,7 @@ do
 					ScreenInsets = Enum.ScreenInsets.None,
 					ZIndexBehavior = Enum.ZIndexBehavior.Sibling,
 					DisplayOrder = 201,
-					OnTopOfCoreBlur = true,
+					OnTopOfCoreBlur = false,
 					g("CanvasGroup")({
 						Name = "MenuBody",
 						BorderColor3 = Color3.fromRGB(0, 0, 0),
@@ -8004,7 +8004,7 @@ l.New = function(p)
 				ResetOnSpawn = false,
 				ZIndexBehavior = Enum.ZIndexBehavior.Sibling,
 				DisplayOrder = 200,
-				OnTopOfCoreBlur = true,
+				OnTopOfCoreBlur = false,
 			})
 		)
 	)
