@@ -7697,7 +7697,7 @@ do
 						if u.ValueChanged then
 							task.spawn(u.ValueChanged, u, u.Value)
 						end
-                        task.wait()
+                        task.wait(.05)
                         for i = 1,5 do task.wait(.05)
                         updateOptions()
                         end
@@ -7706,7 +7706,7 @@ do
 							u.Expanded = false
 							u.Value = w
 						end
-                        task.wait()
+                        task.wait(.05)
                         for i = 1,5 do task.wait(.05)
                         updateOptions()
                         end
