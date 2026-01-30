@@ -7697,20 +7697,15 @@ do
 						if u.ValueChanged then
 							task.spawn(u.ValueChanged, u, u.Value)
 						end
-                        task.wait(.05)
-                        for i = 1,5 do task.wait(.05)
-                        updateOptions()
-                        end
 					else
 						if u then
 							u.Expanded = false
 							u.Value = w
 						end
-                        task.wait(.05)
-                        for i = 1,5 do task.wait(.05)
-                        updateOptions()
-                        end
 					end
+                    for i =1,15 do task.wait()
+                    updateOptions()
+                    end
 				end)
 			end
 			c = c or {}
