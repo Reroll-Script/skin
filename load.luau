@@ -3511,7 +3511,7 @@ do
 				Toggle = {
 					Knob = d("FFFFFF", 100),
 					KnobEffects = d("FFFFFF", 100),
-					SwitchOff = d("000000", 9),
+					SwitchOff = d("7a7a7a", 40),
 					SwitchOn = d("47f64d", 100),
 					DepthEffect = c(
 						ColorSequence.new({
