@@ -3511,7 +3511,7 @@ do
 				Toggle = {
 					Knob = d("FFFFFF", 100),
 					KnobEffects = d("FFFFFF", 100),
-					SwitchOff = d("7a7a7a", 40),
+					SwitchOff = d("7a7a7a", 9),
 					SwitchOn = d("47f64d", 100),
 					DepthEffect = c(
 						ColorSequence.new({
@@ -7710,6 +7710,19 @@ do
 					end
 				end)
 			end
+            local function filterOptions(text)
+                text = string.lower(text or "")
+
+                for _, opt in ipairs(o.Options) do
+                    if opt then
+                        local lbl = opt:FindFirstChild("Label")
+                        if lbl then
+                            local show = text == "" or string.find(string.lower(lbl.Text), text, 1, true)
+                            opt.Visible = show and true or false
+                        end
+                    end
+                end
+            end
 			c = c or {}
 			c.Expanded = c.Expanded or false
 			o.Body = (
@@ -7848,6 +7861,32 @@ do
 			)
 			o.MenuBody = (o.MenuContainer:FindFirstChild("MenuBody"))
 			o.Menu = (o.MenuBody:FindFirstChild("PullDownMenu"))
+            o.SearchBar = g("TextBox")({
+                Name = "SearchBar",
+                Size = UDim2.new(1, -2, 0, 28),
+                AnchorPoint = Vector2.new(0, 0.5),
+                Position = UDim2.new(0, 5, 0.5, 0),
+                BackgroundColor3 = Color3.fromRGB(27, 27, 27),
+                BackgroundTransparency = 0,
+                PlaceholderText = "Search...",
+                Text = "",
+                ClearTextOnFocus = false,
+                FontFace = Font.new("rbxassetid://12187365364"),
+                TextSize = 14,
+                Parent = o.Menu,
+                __dynamicKeys = {
+                    TextColor3 = b.Theme.Text.Primary[1],
+                    TextTransparency = b.Theme.Text.Primary[2],
+                },
+                g("UICorner")({ CornerRadius = UDim.new(0,6) }),
+                g("UIPadding")({
+                    PaddingLeft = UDim.new(0,6),
+                    PaddingRight = UDim.new(0,6),
+                }),
+            })
+            o.SearchBar:GetPropertyChangedSignal("Text"):Connect(function()
+                filterOptions(o.SearchBar.Text)
+            end)
 			local u
 			local v = {
 				Options = function(v)
@@ -7863,6 +7902,10 @@ do
 					if w then
 						o.MenuContainer.Parent = o.Body.__instance
 					end
+                    if not w then
+                        o.SearchBar.Text = ""
+                        filterOptions("")
+                    end
 					s()
 					local x, y =
 						{ GroupTransparency = w and 0 or 1 },
