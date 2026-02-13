@@ -3458,7 +3458,11 @@ do
 					InnerShadow = d("FFFFFF", 10),
 				},
 				MenuButton = { IndicatorBackground = d("FFFFFF", 10), MenuBackground = d("2C2C2E", 95) },
+                Dropdown = {
+                    BackgroundColor = d("2C2C2E", 100),
+                },
 			},
+
 		}
 	end
 	function a.h()
@@ -3562,6 +3566,9 @@ do
 					IndicatorBackground = d("000000", 5),
 					MenuBackground = d("F6F6F6", 95),
 				},
+                Dropdown = {
+                    BackgroundColor = c(Color3.fromRGB(10, 200, 0))
+                },
 			},
 		}
 	end
@@ -7594,7 +7601,7 @@ do
 						Size = UDim2.fromScale(1, 0),
 						AutoButtonColor = false,
 						AutomaticSize = Enum.AutomaticSize.XY,
-						BackgroundColor3 = Color3.fromRGB(10, 200, 0),
+                        BackgroundColor3 = Color3.fromRGB(10, 200, 0),
 						BackgroundTransparency = 1,
 						BorderColor3 = Color3.fromRGB(0, 0, 0),
 						BorderSizePixel = 0,
@@ -7632,6 +7639,8 @@ do
 							TextTransparency = 0.15,
 							TextTruncate = Enum.TextTruncate.AtEnd,
 							__dynamicKeys = {
+--[[                                 BackgroundColor3 = b.Theme.Dropdown.BackgroundColor[1],
+                                BackgroundTransparency = b.Theme.Dropdown.BackgroundColor[2], ]]
 								TextColor3 = b.Theme.Text.Primary[1],
 								TextTransparency = b.Theme.Text.Primary[2],
 							},
