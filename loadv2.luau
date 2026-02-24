@@ -9732,6 +9732,7 @@ local creator = __DIST.d()
 	local structures = {
 		Options = {},
 	}
+    local Search = properties.Search == true
 
 	--// Constants
 	local HORIZONTAL_OFFSET = -1
@@ -9888,7 +9889,6 @@ local creator = __DIST.d()
                 task.spawn(properties.ValueChanged, object, object.Value)
             end
         end)
-
     end
 
 	--// UI
@@ -10046,25 +10046,44 @@ local creator = __DIST.d()
 	structures.MenuBody = structures.MenuContainer:FindFirstChild("MenuBody") :: CanvasGroup
 	structures.Menu = structures.MenuBody:FindFirstChild("PullDownMenu") :: ScrollingFrame
 
-    structures.SearchBar = create("TextBox")({
-        Name = "SearchBar",
-        Size = UDim2.new(1, -2, 0, 28),
-        Position = UDim2.new(0, 5, 0, 5),
-        PlaceholderText = "Search...",
-        Text = "",
-        ClearTextOnFocus = false,
+    if Search then
+        structures.SearchBar = create("TextBox")({
+            Name = "SearchBar",
+            Size = UDim2.new(1, -2, 0, 28),
+            Position = UDim2.new(0, 5, 0, 5),
+            PlaceholderText = "Search...",
+            Text = "",
+            ClearTextOnFocus = false,
+            Parent = structures.Menu,
+            __dynamicKeys = {
+                BackgroundColor3 = self.Theme.Controls.Background[1],
+                TextColor3 = self.Theme.Text.Primary[1],
+                TextTransparency = self.Theme.Text.Primary[2],
+                PlaceholderColor3 = self.Theme.Text.Secondary[1],
+            },
+
+            create("UICorner")({
+                CornerRadius = UDim.new(0,6)
+            })
+        })
+    end
+
+--[[     structures.NoResults = create("TextLabel")({
+        Name = "NoResults",
+        Size = UDim2.new(1,0,0,30),
+        BackgroundTransparency = 1,
+        Text = "No results",
+        TextSize = 14,
+        Visible = false,
         Parent = structures.Menu,
         __dynamicKeys = {
-            BackgroundColor3 = self.Theme.Controls.Background[1],
-        },
-
-        create("UICorner")({
-            CornerRadius = UDim.new(0,6)
-        })
-    })
+            TextColor3 = self.Theme.Text.Secondary[1],
+        }
+    }) ]]
     
     local function filterOptions(text)
         text = string.lower(text or "")
+        local found = false
 
         for _, opt in ipairs(structures.Options) do
             if opt then
@@ -10072,14 +10091,23 @@ local creator = __DIST.d()
                 if lbl then
                     local show = text == "" or string.find(string.lower(lbl.Text), text, 1, true)
                     opt.Visible = show
+                    if show then
+                        found = true
+                    end
                 end
             end
         end
+
+--[[         if structures.NoResults then
+            structures.NoResults.Visible = not found
+        end ]]
     end
 
-    structures.SearchBar:GetPropertyChangedSignal("Text"):Connect(function()
-        filterOptions(structures.SearchBar.Text)
-    end)
+    if Search then
+        structures.SearchBar:GetPropertyChangedSignal("Text"):Connect(function()
+            filterOptions(structures.SearchBar.Text)
+        end)
+    end
 
 	local object
 	local bindings = {
@@ -10100,7 +10128,7 @@ local creator = __DIST.d()
 				structures.MenuContainer.Parent = structures.Body.__instance
 			end
 
-            if not expand then
+            if not expand and object.Search then
                 structures.SearchBar.Text = ""
                 filterOptions("")
             end
