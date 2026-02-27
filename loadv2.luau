@@ -9856,17 +9856,19 @@ local creator = __DIST.d()
         local label = option:FindFirstChild("Label")
         structures.Options[index] = option.__instance
 
---[[         option:GetPropertyChangedSignal("GuiState"):Connect(function()
-            if not object.Expanded then return end
+        if not object.Multi then
+            option:GetPropertyChangedSignal("GuiState"):Connect(function()
+                if not object.Expanded then return end
 
-            if option.GuiState == Enum.GuiState.Hover then
-                option.BackgroundTransparency = self.Theme.Controls.SelectionFocused[2].Value
-                label.TextColor3 = self.Theme.Controls.SelectionFocusedAccent[1].Value
-                label.TextTransparency = self.Theme.Controls.SelectionFocusedAccent[2].Value
-            else
-                refreshColors()
-            end
-        end) ]]
+                if option.GuiState == Enum.GuiState.Hover then
+                    option.BackgroundTransparency = self.Theme.Controls.SelectionFocused[2].Value
+                    label.TextColor3 = self.Theme.Controls.SelectionFocusedAccent[1].Value
+                    label.TextTransparency = self.Theme.Controls.SelectionFocusedAccent[2].Value
+                else
+                    refreshColors()
+                end
+            end)
+        end
 
         option.MouseButton1Click:Connect(function()
             if object.Multi then
@@ -9998,6 +10000,7 @@ local creator = __DIST.d()
 			BorderSizePixel = 0,
 			BackgroundTransparency = 1,
 			Size = UDim2.fromScale(1, 1),
+            
 
 			create("ScrollingFrame")({
 				Name = "PullDownMenu",
