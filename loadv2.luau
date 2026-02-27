@@ -9865,7 +9865,7 @@ local creator = __DIST.d()
                     label.TextColor3 = self.Theme.Controls.SelectionFocusedAccent[1].Value
                     label.TextTransparency = self.Theme.Controls.SelectionFocusedAccent[2].Value
                 else
-                    refreshColors()
+                    updateOptions(object)
                 end
             end)
         end
